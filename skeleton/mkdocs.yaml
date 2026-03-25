@@ -1,0 +1,8 @@
+site_name: 'PySpark Workflow Template'
+site_description: 'To create a workflow template using PySpark'
+
+nav:
+  - Introduction: index.md
+
+plugins:
+  - techdocs-core

@@ -1,0 +1,26 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61.0"]
+
+[project]
+name = "${{ values.identifier | replace('.', '_') }}"
+description = "${{ values.description }}"
+version = "0.0.0" # overridden by CI; kept for local development
+requires-python = ">=3.11"
+license = {text = "Apache Software License 2.0"}
+authors = [{name = "AgileLab S.r.l.", email = "info@agilelab.it"}]
+
+classifiers = [
+    "Programming Language :: Python :: 3"
+]
+
+# pyspark is provided by the Dataproc cluster at runtime; listed here only as
+# an optional dev dependency so local development still works.
+[project.optional-dependencies]
+dev = ["pyspark==3.5.3"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+spark_app = ["jars/*"]

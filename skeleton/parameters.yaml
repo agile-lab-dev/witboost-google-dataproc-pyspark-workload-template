@@ -1,0 +1,55 @@
+values:
+  jobType: PYSPARK
+environmentParameters:
+  production:
+    masterConfigs:
+      machineType: n2-highmem-4
+      primaryDiskSizeGB: 1000
+      primaryDiskType: SSD Persistent Disk
+      numLocalSSD: 4
+      count: 3
+    workerConfigs:
+      machineType: n2-highmem-4
+      primaryDiskSizeGB: 1000
+      primaryDiskType: SSD Persistent Disk
+      numLocalSSD: 4
+      count: 2
+      secondaryWorkers: 0
+    timeToLive: 60
+    workflowTemplateName: ${{ values.identifier.split(".")[0] }}-${{ values.identifier.split(".")[1] }}-${{ values.identifier.split(".")[2] }}-${{ values.identifier.split(".")[3] }}-production
+    clusterName: ${{ values.identifier.split(".")[0] }}-${{ values.identifier.split(".")[1] }}-${{ values.identifier.split(".")[2] }}-${{ values.identifier.split(".")[3] }}-production
+  qa:
+    masterConfigs:
+      machineType: e2-medium
+      primaryDiskSizeGB: 500
+      primaryDiskType: Standard Persistent Disk
+      numLocalSSD: 2
+      count: 1
+    workerConfigs:
+      machineType: e2-medium
+      primaryDiskSizeGB: 500
+      primaryDiskType: Standard Persistent Disk
+      numLocalSSD: 2
+      count: 2
+      secondaryWorkers: 0
+    timeToLive: 60
+    workflowTemplateName: ${{ values.identifier.split(".")[0] }}-${{ values.identifier.split(".")[1] }}-${{ values.identifier.split(".")[2] }}-${{ values.identifier.split(".")[3] }}-qa
+    clusterName: ${{ values.identifier.split(".")[0] }}-${{ values.identifier.split(".")[1] }}-${{ values.identifier.split(".")[2] }}-${{ values.identifier.split(".")[3] }}-qa
+  development:
+    masterConfigs:
+      machineType: n2-standard-2
+      primaryDiskSizeGB: 50
+      primaryDiskType: Standard Persistent Disk
+      numLocalSSD: 1
+      count: 1
+    workerConfigs:
+      machineType: n2-standard-2
+      primaryDiskSizeGB: 50
+      primaryDiskType: Standard Persistent Disk
+      numLocalSSD: 0
+      count: 2
+      secondaryWorkers: 0
+    timeToLive: 60
+    artifactVersion: current
+    workflowTemplateName: ${{ values.identifier.split(".")[0] }}-${{ values.identifier.split(".")[1] }}-${{ values.identifier.split(".")[2] }}-${{ values.identifier.split(".")[3] }}-development
+    clusterName: ${{ values.identifier.split(".")[0] }}-${{ values.identifier.split(".")[1] }}-${{ values.identifier.split(".")[2] }}-${{ values.identifier.split(".")[3] }}-development

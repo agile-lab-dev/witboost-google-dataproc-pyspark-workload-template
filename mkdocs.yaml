@@ -1,0 +1,8 @@
+site_name: 'PySpark Workflow Template'
+site_description: 'Create a Dataproc Workflow Template using this template'
+
+nav:
+  - Template Usage: index.md
+
+plugins:
+  - techdocs-core

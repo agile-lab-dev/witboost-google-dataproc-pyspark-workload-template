@@ -1,0 +1,89 @@
+%SKELETON
+{%- set parentMajorVersion = values.identifier.split(".")[2] -%}
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.identifier }}
+  description: ${{ values.description }}
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+  tags:
+    - gcp
+    - dataproc
+    - workload
+    - pyspark
+spec:
+  type: workload
+  lifecycle: experimental
+  owner: ${{ values.owner }}
+  system: ${{ values.dataproduct }}
+  domain: ${{ values.domain }}
+  mesh:
+    name: ${{ values.name }}
+    fullyQualifiedName: ${{ values.fullyQualifiedName }}
+    description: ${{ values.description }}
+    kind: workload
+    version: ${{ parentMajorVersion + ".0.0" }}
+    infrastructureTemplateId: ${{ values.infrastructureTemplateId }}
+    useCaseTemplateId: ${{ values.useCaseTemplateId }}
+    dependsOn:
+      - ${{ values.gcsInternalStorageAreaId }}
+    {% if values.additionalDependsOn | length > 0 %}{% for i in values.additionalDependsOn %}
+      - ${{ i }}
+    {%- endfor %}{% else %}{% endif %}
+    platform: GCP
+    technology: Spark
+    readsFrom: {% if values.readsFrom | length > 0 %}{% for i in values.readsFrom %}
+      - ${{ i }}
+    {%- endfor %}{% else %}[]{% endif %}
+    tags: []
+    specific:
+      {% if environment %}
+      timeToLive: ${{ env.timeToLive }}
+      projectId: ${{ env.project }}
+      region: ${{ env.region }}
+      workflowTemplateName: ${{ env.workflowTemplateName }}
+      {% endif %}
+      artifact:
+        {% if values.artifactName %}
+        name: ${{ values.artifactName }}
+        {% else %}
+        name: ${{ values.identifier.split(".")[0] }}_${{ values.identifier.split(".")[1] }}_${{ values.identifier.split(".")[2] }}_${{ values.identifier.split(".")[3] }}
+        {% endif %}
+        {% if environment %}
+        version: ${{ env.artifactVersion }}
+        {% endif %}
+        gcsInternalStorageAreaId: ${{ values.gcsInternalStorageAreaId | dump }}
+      job:
+        type: ${{ values.jobType }}
+        mainPythonFile: ${{ values.mainPythonFile }}
+        additionalPythonFiles: {% if values.additionalPythonFiles | length > 0 %}{% for i in values.additionalPythonFiles %}
+          - ${{ i }}
+        {%- endfor %}{% else %}[]{% endif %}
+        jarFiles: {% if values.jarFiles | length > 0 %}{% for i in values.jarFiles %}
+          - ${{ i }}
+        {%- endfor %}{% else %}[]{% endif %}
+        args: {% if values.args | length > 0 %}{% for i in values.args %}
+          - ${{ i }}
+        {%- endfor %}{% else %}[]{% endif %}
+      cluster:
+        imageVersion: ${{ values.imageVersion }}
+        {% if environment %}
+        name: ${{ env.clusterName }}
+        serviceAccount: ${{ env.serviceAccount }}
+        masters:
+          count: ${{ env.masterConfigs.count }}
+          machineType: ${{ env.masterConfigs.machineType }}
+          primaryDiskSizeGB: ${{ env.masterConfigs.primaryDiskSizeGB }}
+          primaryDiskType: ${{ env.masterConfigs.primaryDiskType }}
+          numLocalSsd: ${{ env.masterConfigs.numLocalSSD }}
+        workers:
+          count: ${{ env.workerConfigs.count }}
+          machineType: ${{ env.workerConfigs.machineType }}
+          primaryDiskSizeGB: ${{ env.workerConfigs.primaryDiskSizeGB }}
+          primaryDiskType: ${{ env.workerConfigs.primaryDiskType }}
+          numLocalSsd: ${{ env.workerConfigs.numLocalSSD }}
+        secondaryWorkers:
+          count: ${{ env.workerConfigs.secondaryWorkers }}
+        {% endif %}
