@@ -40,6 +40,7 @@ spec:
     tags: []
     specific:
       {% if environment %}
+      iam: ${{ env.iam | dump}}
       timeToLive: ${{ env.timeToLive }}
       projectId: ${{ env.project }}
       region: ${{ env.region }}

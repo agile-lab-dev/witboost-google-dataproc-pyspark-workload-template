@@ -18,6 +18,8 @@ environmentParameters:
     timeToLive: 60
     workflowTemplateName: ${{ values.identifier.split(".")[0] }}-${{ values.identifier.split(".")[1] }}-${{ values.identifier.split(".")[2] }}-${{ values.identifier.split(".")[3] }}-production
     clusterName: ${{ values.identifier.split(".")[0] }}-${{ values.identifier.split(".")[1] }}-${{ values.identifier.split(".")[2] }}-${{ values.identifier.split(".")[3] }}-production
+    iam:
+      developmentGroupRoles: ['roles/dataproc.viewer']
   qa:
     masterConfigs:
       machineType: e2-medium
@@ -35,6 +37,8 @@ environmentParameters:
     timeToLive: 60
     workflowTemplateName: ${{ values.identifier.split(".")[0] }}-${{ values.identifier.split(".")[1] }}-${{ values.identifier.split(".")[2] }}-${{ values.identifier.split(".")[3] }}-qa
     clusterName: ${{ values.identifier.split(".")[0] }}-${{ values.identifier.split(".")[1] }}-${{ values.identifier.split(".")[2] }}-${{ values.identifier.split(".")[3] }}-qa
+    iam:
+      developmentGroupRoles: ['roles/dataproc.viewer']
   development:
     masterConfigs:
       machineType: n2-standard-2
@@ -53,3 +57,5 @@ environmentParameters:
     artifactVersion: current
     workflowTemplateName: ${{ values.identifier.split(".")[0] }}-${{ values.identifier.split(".")[1] }}-${{ values.identifier.split(".")[2] }}-${{ values.identifier.split(".")[3] }}-development
     clusterName: ${{ values.identifier.split(".")[0] }}-${{ values.identifier.split(".")[1] }}-${{ values.identifier.split(".")[2] }}-${{ values.identifier.split(".")[3] }}-development
+    iam:
+      developmentGroupRoles: ['roles/dataproc.viewer']

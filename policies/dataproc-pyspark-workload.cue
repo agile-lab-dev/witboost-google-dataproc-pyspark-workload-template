@@ -59,6 +59,9 @@ technology!:               "Spark"
 readsFrom?:                [...string]
 tags:                      []
 specific: {
+	iam!: {
+		developmentGroupRoles!: [...#NonEmptyString]
+	}
 	timeToLive!:           int & >0
 	projectId!:            #NonEmptyString
 	region!:               #Region
